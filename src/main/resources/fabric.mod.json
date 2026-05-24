@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "spotifycraft",
+  "version": "${version}",
+  "name": "SpotifyCraft",
+  "description": "Spotify-like music player for Minecraft",
+  "authors": ["SpotifyCraft"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.spotifycraft.SpotifyCraftClient"]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  }
+}

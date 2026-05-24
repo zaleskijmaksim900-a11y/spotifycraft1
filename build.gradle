@@ -1,0 +1,38 @@
+plugins {
+    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = '1.0.0'
+group = 'com.spotifycraft'
+archivesBaseName = 'spotifycraft'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.21.1"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:0.16.5"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.110.0+1.21.1"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset "UTF-8"
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${archivesBaseName}" }
+    }
+}
