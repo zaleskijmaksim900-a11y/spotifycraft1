@@ -14,20 +14,18 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-
-      - name: Fix gradlew permissions
-        run: git update-index --chmod=+x gradlew
+      - name: Find and fix gradlew
+        run: |
+          find . -name "gradlew" -type f
+          GRADLEW=$(find . -name "gradlew" -type f | head -1)
+          echo "Found: $GRADLEW"
+          chmod +x "$GRADLEW"
+          echo "GRADLEW_PATH=$GRADLEW" >> $GITHUB_ENV
 
       - name: Build mod
-        run: bash gradlew build
+        run: ${{ env.GRADLEW_PATH }} build
 
       - uses: actions/upload-artifact@v4
         with:
           name: SpotifyCraft-mod
-          path: build/libs/spotifycraft-*.jar
+          path: "**/build/libs/spotifycraft-*.jar"
